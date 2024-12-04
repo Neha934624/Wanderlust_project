@@ -1,0 +1,108 @@
+<% layout("/layouts/boilerplate") %>
+
+<div class="container mt-2">
+  <!-- Show Title Section -->
+  <div class="col-8 text-center mb-3">
+    <h2 class="display-6"><%= showList.title %></h2>
+  </div>
+
+  <!-- Show Card Section -->
+  <div class="card mx-auto my-4" style="max-width: 37rem; border-radius: 15px; box-shadow: 0 4px 8px rgba(0,0,0,0.1);">
+    <img src="<%= showList.image.url %>" class="card-img-top img-fluid" alt="LISTING IMAGE" style="height: 250px; object-fit: cover;">
+    <div class="card-body">
+      <p class="card-text">
+        <p>Owned by :<i><%= showList.owner.username %></i></p>
+        <b><%= showList.title %></b><br>
+        <%= showList.description %><br>
+            &#8377; <%= showList.price %><br>
+            <%= showList.location %><br>
+            <%= showList.country %>
+      </p>
+  </div>
+  </div>
+  <!-- Edit/Delete Buttons (if the current user is the owner) -->
+  <% if(currusr && showList.owner._id.equals(currusr._id)) { %>
+    <div class="d-flex flex-column flex-md-row justify-content-center mt-4">
+      <!-- Edit button (smaller on mobile) -->
+      <a href="/listings/<%= showList._id %>/edit" class="btn btn-dark mx-3 mb-3 mb-md-0 col-10 col-md-3 btn-sm btn-lg">Edit Listing</a>
+      <!-- Delete button (smaller on mobile) -->
+      <form action="/listings/<%= showList._id %>?_method=DELETE" method="post" class="m-0 col-12 col-md-4">
+        <button class="btn btn-danger mx-3 mb-2 mb-md-0 col-10 btn-sm btn-lg ">Delete Listing</button>
+      </form>
+    </div>
+  <% } %>
+
+  <!-- Reviews Section -->
+  <hr class="my-5">
+  <% if(currusr){ %>
+    <div class="col-12 col-md-8 offset-md-2 mb-4">
+      <h4>Leave a Review</h4>
+      <form action="/listings/<%= showList._id %>/reviews" method="post" novalidate class="needs-validation">
+        <!-- Star Rating -->
+        <div class="mb-3">
+          <fieldset class="starability-slot">
+            <input type="radio" name="review[rating]" id="no-rate" value="0" checked aria-label="No rating">
+            <input type="radio" id="second-rate1" name="review[rating]" value="1" />
+            <label for="second-rate1" title="Terrible">1 star</label>
+            <input type="radio" id="second-rate2" name="review[rating]" value="2" />
+            <label for="second-rate2" title="Not good">2 stars</label>
+            <input type="radio" id="second-rate3" name="review[rating]" value="3" />
+            <label for="second-rate3" title="Average">3 stars</label>
+            <input type="radio" id="second-rate4" name="review[rating]" value="4" />
+            <label for="second-rate4" title="Very good">4 stars</label>
+            <input type="radio" id="second-rate5" name="review[rating]" value="5" />
+            <label for="second-rate5" title="Amazing">5 stars</label>
+          </fieldset>
+        </div>
+
+        <!-- Review Comments -->
+        <div class="mt-3 mb-3">
+          <label for="comment" class="form-label">Comments</label>
+          <textarea name="review[comment]" id="comment" cols="30" rows="5" class="form-control" required></textarea>
+          <div class="invalid-feedback">
+            Please provide a comment.
+          </div>
+        </div>
+
+        <button class="btn btn-outline-dark btn-lg w-70">Submit Review</button>
+      </form>
+    </div>
+  <% } %>
+
+<!-- Display All Reviews Section -->
+<% if (showList.reviews.length > 0) { %>
+  <hr class="my-5">
+  <h4 class="offset-2">All Reviews</h4>
+  <div class="row offset-1">
+    <% for (rev of showList.reviews) { %> 
+      <div class="col-12 col-md-6 col-lg-4 mb-4">  <!-- Use col-12 for small screens and col-md-6 for medium and larger screens -->
+        <div class="card shadow-sm" style="border-radius: 15px;">
+          <div class="card-body">
+            <h5 class="card-title">
+              <!--  col-12 col-md-8 offset-md-2 mb-4 -->
+              <% if (rev.author && rev.author.username) { %>
+                @<%= rev.author.username %>
+              <% } else { %>
+                Anonymous
+              <% } %>
+            </h5>
+            <p class="starability-result" data-rating="<%= rev.rating %>"></p>
+            <p class="card-text"><%= rev.comment %></p>
+          </div>
+          <% if (currusr && (currusr._id.equals(showList.owner._id) || currusr.isAdmin)) { %>
+            <form action="/listings/<%= showList._id %>/reviews/<%= rev._id %>?_method=DELETE" method="post">
+              <div class="mb-3 text-end">
+                <!-- Added margin to delete button -->
+                <button class="btn btn-danger btn-sm me-3">Delete</button>
+              </div>
+            </form>
+          <% } %>
+        </div>
+      </div>
+    <% } %>
+  </div>
+<% } else { %>
+  <p class="text-center">No reviews yet! Be the first to leave a review.</p>
+<% } %>
+
+</div>

@@ -1,0 +1,69 @@
+<%- layout("/layouts/boilerplate") %> 
+    <div class="row">
+        <div class="col-8 offset-2">
+        <h2>CREATE A NEW LISTING</h2>  
+        <!-- enctype="multipart/form-data" is used in order to accept images,fles... in db as it accepts only raw ata -->
+        <form action="/listings" method="post" novalidate class="needs-validation" enctype="multipart/form-data">
+            <div class="mb-3"><label for="" class="form-label">Title</label>
+            <input type="text" placeholder="Enter title" name="title" class="form-control" required>
+            <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Invalid Title
+              </div>
+        </div>
+            
+          <div>
+            <div class="mb-3">
+              <label for="" class="form-label">Description</label>
+              <input type="text" placeholder="Enter description" name="description" class="form-control" required>
+              <div class="invalid-feedback">
+                  Invalid Description.
+                </div>
+          </div>
+        
+      <div>
+          
+        <div class="mb-3">   
+          <label for="" class="form-label">Upload Image</label>  
+          <!-- And here we need to change type as file -->
+          <input type="file" placeholder="Enter image url" name="image" class="form-control" required>
+          <div class="invalid-feedback">  
+        </div>
+      </div>
+            <div class="row">
+                <div class="mb-3 col-md-4">
+                    <label for="" class="form-label">Price</label>
+                    <input type="text" placeholder="Enter price" name="price" class="form-control" required>
+                    <div class="invalid-feedback">
+                        Price in Invalid
+                      </div>
+                </div>
+                <div class="mb-3 col-md-8">
+                    <label for="" class="form-label">Country</label>
+                    <input type="text" placeholder="Enter country" name="country" class="form-control" required>
+                    <div class="invalid-feedback">
+                        Enter a valid Country name
+                      </div>
+                </div>
+                    
+            </div>
+            <div class="mb-3">
+            <label for="" class="form-label">Location</label>
+            <input type="text" placeholder="Enter location" name="location" class="form-control" required>
+            <div class="invalid-feedback">
+                Enter a valid location
+              </div></div>
+            
+            <br>
+            <button class="btn btn-danger">ADD</button>
+    
+        </form>
+    </div>
+</div>
+
+<script src="/js/script.js"></script>
+    
+
+

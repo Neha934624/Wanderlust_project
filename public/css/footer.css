@@ -1,0 +1,33 @@
+/*! FOOTER */
+.f-info{
+    height: 6rem; 
+    background-color: rgba(244, 248, 252, 0.722);
+}
+.f-info-social{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    top: 4px;  
+}
+.logos{
+    margin: 0.3rem;
+}
+.f-info-title{
+    text-align: center;
+}
+.f-info-links{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.f-info-links a{
+    text-align: center;
+    margin: 0.2rem;
+    text-decoration: none;
+    flex-wrap: wrap;
+    color: #222;
+}
+.f-info-links:hover{
+    text-decoration: underline;
+}
